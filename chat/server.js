@@ -17,11 +17,19 @@ app.use('/', function(req, resp){
 });*/
 
 router.get('/message', function(req, resp) {
+    // Información de las cabeceras enviadas
+    console.log(req.headers);
+
+    //Enviando las cabeceras al cliente
+    resp.header({
+        "custom-header": "Header con valor personalizado" //Definiendo cabecera personalizada
+    });
+
     resp.send('Lista de mensajes');
 });
 
 router.post('/message', function(req, resp) {
-    //Información del query
+    // Información del query
     console.log(req.query);
     // Información del body
     console.log(req.body);
