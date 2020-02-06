@@ -33,7 +33,15 @@ router.post('/message', function(req, resp) {
     console.log(req.query);
     // Información del body
     console.log(req.body);
-    resp.send('Se añadio el mensaje');
+
+    // Devolver una respuesta plana
+    // resp.send('Se añadio el mensaje');
+
+    //Devolver solamente un estado
+    //resp.status(201).send();
+
+    //Devolviendo un objeto
+    resp.status(201).send([{error: '', body: 'Creado correctamente'}]);
 });
 
 
