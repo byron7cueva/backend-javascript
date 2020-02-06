@@ -5,6 +5,7 @@ const controller = require('./controller');
 const router = express.Router();
 
 router.get('/', function(req, resp) {
+    /*
     // Información de las cabeceras enviadas
     console.log(req.headers);
 
@@ -14,7 +15,15 @@ router.get('/', function(req, resp) {
     });
 
     //resp.send('Lista de mensajes');
-    response.success(req, resp, 'Lista de mensajes');
+    response.success(req, resp, 'Lista de mensajes');*/
+
+    controller.getMessages()
+    .then(messageList => {
+        response.success(req, resp, messageList, 200);
+    })
+    .catch(error => {
+        response.error(req, resp, 'Unexpected Error', 500, error);
+    });
 });
 
 router.post('/', function(req, resp) {
