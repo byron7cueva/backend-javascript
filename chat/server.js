@@ -53,6 +53,10 @@ router.post('/message', function(req, resp) {
     }
 });
 
+// Indicandole que bajo la ruta app, se va servir archivos estáticos
+// Los cuales se encuentran en public
+app.use('/app', express.static('public'));
+
 
 app.listen(3000);
 console.log('La aplicaciòn esta escuchando desde https://localhost:3000');
