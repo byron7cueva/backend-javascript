@@ -47,7 +47,7 @@ router.post('/message', function(req, resp) {
     //resp.status(201).send([{error: '', body: 'Creado correctamente'}]);
 
     if(req.query.error == 'ok') {
-        response.error(req, resp, 'Error simulado', 400);    
+        response.error(req, resp, 'Error inesperado', 500, 'Es solo una simulacion de los errores');
     } else {
         response.success(req, resp, 'Creado correctamente', 201);
     }
