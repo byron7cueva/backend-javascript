@@ -4,6 +4,9 @@ const controller = require('./controller');
 
 const router = express.Router();
 
+/**
+ * Obtener mensajes
+ */
 router.get('/', function(req, resp) {
     /*
     // Información de las cabeceras enviadas
@@ -26,6 +29,9 @@ router.get('/', function(req, resp) {
     });
 });
 
+/**
+ * Crear mensaje
+ */
 router.post('/', function(req, resp) {
     // Información del query
     // console.log(req.query);
@@ -57,5 +63,18 @@ router.post('/', function(req, resp) {
         response.error(req, resp, 'Informción invalida', 400, 'Error en el controlador');
     });
 });
+
+/**
+ * Actualizar mensaje
+ */
+router.patch('/:id', function(req, res){
+    controller.updateMessage(req.params.id, req.body.message)
+    .then(data => {
+        response.success(req, res, data, 200);
+    })
+    .catch(e => {
+        response.error(req,res, 'Error interno', 500, e);
+    });
+})
 
 module.exports = router;
