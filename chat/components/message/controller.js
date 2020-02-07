@@ -1,4 +1,5 @@
 const store = require('./store');
+const {socket} = require('../../socket');
 
 /**
  * Funcion para agregar los mensajes
@@ -28,6 +29,9 @@ function addMessage(chat, user, message, file) {
     
         // Guardando
         store.add(fullMessage);
+
+        socket.io.emit('message', fullMessage);
+
         resolve(fullMessage);
     })
 }
