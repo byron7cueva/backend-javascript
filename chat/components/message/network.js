@@ -80,4 +80,17 @@ router.patch('/:id', function(req, res){
     });
 });
 
+/**
+ * Eliminar mensaje
+ */
+router.delete('/:id', function(req, resp) {
+    controller.deleteMessage(req.params.id)
+        .then(() => {
+            response.success(req, resp,`Usuario ${req.params.id} eliminado`, 200);
+        })
+        .catch(e => {
+            response.error(req, resp, 'Error interno', 500, e);
+        });
+});
+
 module.exports = router;
