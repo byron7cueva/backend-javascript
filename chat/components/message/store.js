@@ -12,11 +12,11 @@ function addMessage(message) {
 /**
  * Obtener los mensajes
  */
-async function getMessages(filterUser) {
+async function getMessages(filterMessages) {
     return new Promise((resolve, reject) => {
         let filter = {};
-        if(filterUser !== null) {
-            filter = {user: filterUser}
+        if(filterMessages !== null) {
+            filter = {chat: filterMessages}
         }
         Model.find(filter)
             // Se debe indicar que campo debe popular

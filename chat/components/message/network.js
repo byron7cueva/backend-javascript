@@ -21,7 +21,7 @@ router.get('/', function(req, resp) {
     response.success(req, resp, 'Lista de mensajes');*/
 
     // Obteniendo informacion del filtro
-    const filterMessages = req.query.user || null;
+    const filterMessages = req.query.chat || null;
 
     controller.getMessages(filterMessages)
     .then(messageList => {
@@ -58,7 +58,7 @@ router.post('/', function(req, resp) {
         response.success(req, resp, 'Creado correctamente', 201);
     }*/
 
-    controller.addMessage(req.body.user, req.body.message)
+    controller.addMessage(req.body.chat, req.body.user, req.body.message)
     .then(fullMessage => {
         response.success(req, resp, fullMessage, 201);
     })
