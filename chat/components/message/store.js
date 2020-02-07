@@ -48,8 +48,3 @@ module.exports = {
     updateText: updateText,
     remove: removeMessage
 }
-
-//db_user_telegrom
-//YOtdai78JKrftFCl
-//mongo "mongodb+srv://cluster0-d4z3s.mongodb.net/test"  --username db_user_telegrom
-//mongodb+srv://db_user_telegrom:<password>@cluster0-d4z3s.mongodb.net/test?retryWrites=true&w=majority

@@ -4,7 +4,8 @@ const db = require('./db');
 const routes = require('./network/routes');
 
 // Creando una aplicacion con express
-db('mongodb+srv://db_user_telegrom:YOtdai78JKrftFCl@cluster0-d4z3s.mongodb.net/test?retryWrites=true&w=majority');
+const connection = process.env.CONNECTION || '';
+db(connection);
 var app = express();
 
 app.use(bodyParser.json()); // Para aceptar infromacion JSON
