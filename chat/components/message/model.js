@@ -18,7 +18,8 @@ const mySchema = new Schema({
         type: String,
         required: true
     },
-    date: Date
+    date: Date,
+    file: String
 });
 
 // Definiendo el modelo

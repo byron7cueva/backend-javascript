@@ -4,20 +4,29 @@ const store = require('./store');
  * Funcion para agregar los mensajes
  * @param {*} user 
  */
-function addMessage(chat, user, message) {
+function addMessage(chat, user, message, file) {
     return new Promise((resolve, reject) => {
         if(!chat || !user || !message) {
             console.error('[messageController] No hay usuario o mensaje');
             return reject('Los datos son incorrectos');
         }
 
+        // Generando la url
+        let fileUrl = '';
+        if(file) {
+            fileUrl = `http://localhost:3000/app/files/${file.filename}`;
+        }
+
+        // Creando el objeto
         const fullMessage = {
             chat,
             user,
             message,
-            date: new Date()
+            date: new Date(),
+            file: fileUrl
         };
     
+        // Guardando
         store.add(fullMessage);
         resolve(fullMessage);
     })
