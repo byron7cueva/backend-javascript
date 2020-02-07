@@ -25,9 +25,9 @@ function addMessage(user, message) {
 /**
  * Funcion para obtener los mensajes
  */
-function getMessages() {
+function getMessages(filterUser) {
     return new Promise((resolve, reject) => {
-        resolve(store.list());
+        resolve(store.list(filterUser));
     });
 }
 

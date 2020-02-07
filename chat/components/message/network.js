@@ -20,7 +20,10 @@ router.get('/', function(req, resp) {
     //resp.send('Lista de mensajes');
     response.success(req, resp, 'Lista de mensajes');*/
 
-    controller.getMessages()
+    // Obteniendo informacion del filtro
+    const filterMessages = req.query.user || null;
+
+    controller.getMessages(filterMessages)
     .then(messageList => {
         response.success(req, resp, messageList, 200);
     })
@@ -75,6 +78,6 @@ router.patch('/:id', function(req, res){
     .catch(e => {
         response.error(req,res, 'Error interno', 500, e);
     });
-})
+});
 
 module.exports = router;
