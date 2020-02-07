@@ -1,8 +1,12 @@
 const express = require('express');
+const multer = require('multer');
 const response = require('../../network/response');
 const controller = require('./controller');
 
 const router = express.Router();
+const upload = multer({
+    dest: 'upload/'
+});
 
 /**
  * Obtener mensajes
@@ -35,7 +39,7 @@ router.get('/', function(req, resp) {
 /**
  * Crear mensaje
  */
-router.post('/', function(req, resp) {
+router.post('/', upload.single('file'), function(req, resp) {
     // Información del query
     // console.log(req.query);
     // Información del body
