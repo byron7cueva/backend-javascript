@@ -13,12 +13,23 @@ function addMessage(message) {
  * Obtener los mensajes
  */
 async function getMessages(filterUser) {
-    let filter = {};
-    if(filterUser !== null) {
-        filter = {user: filterUser}
-    }
-    const messages = await Model.find(filter);
-    return messages;
+    return new Promise((resolve, reject) => {
+        let filter = {};
+        if(filterUser !== null) {
+            filter = {user: filterUser}
+        }
+        Model.find(filter)
+            // Se debe indicar que campo debe popular
+            .populate('user')
+            // No se hace de forma automatica, se la debe ejecutar el populado
+            .exec((error, populated) => {
+                if(error) {
+                    reject(error);
+                    return false;
+                }
+                resolve(populated);
+            });
+    });
 }
 
 async function updateText(id, message) {
