@@ -1,3 +1,4 @@
-module.exports = {
-    userRouter: require('./network')
-}
+const store = require('../../../store/dummy');
+const UserController = require('./controller');
+
+module.exports = new UserController(store);
