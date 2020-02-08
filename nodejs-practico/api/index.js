@@ -17,6 +17,6 @@ app.use('/api/user', user);
 app.use('/api/auth', auth);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-app.listen(config.port, () => {
-    console.log(`El servidor esta corriendo en el puerto ${config.port}`);
+app.listen(config.api.port, () => {
+    console.log(`El servidor esta corriendo en el puerto ${config.api.port}`);
 });

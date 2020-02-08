@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const auth = require('../../../auth');
 
 const TABLA = 'auth';
@@ -5,7 +7,7 @@ const TABLA = 'auth';
 module.exports = function (injectStore) {
     const store = injectStore || require('../../../store/dummy');
 
-    function upsert(data) {
+    async function upsert(data) {
         const authData = {
             id: data.id
         }
@@ -15,7 +17,7 @@ module.exports = function (injectStore) {
         }
 
         if(data.password) {
-            authData.password = data.password;
+            authData.password = await bcrypt.hash(data.password, 5); // Hay que indicar el numero de veces que queremos que se ejecute el algoritmo
         }
 
         return store.upsert(TABLA, authData);
@@ -26,12 +28,15 @@ module.exports = function (injectStore) {
             username: username
         });
 
-        if(data.password === password) {
-            // Generar token
-            return auth.sign(data);
-        } else {
-            throw new Error('Información invalida')
-        }
+        return bcrypt.compare(password, data.password)
+        .then(sonIguales => {
+            if(sonIguales === true) {
+                // Generar token
+                return auth.sign(data);
+            } else {
+                throw new Error('Información invalida')
+            }
+        });
     }
 
     return {
