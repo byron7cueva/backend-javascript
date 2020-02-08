@@ -1,4 +1,4 @@
-const store = require('../../../store/dummy');
+const store = require('../../../store/mysql');
 const UserController = require('./controller');
 
 module.exports = new UserController(store);

@@ -7,6 +7,7 @@ const router = Router();
 
 // Routes
 router.get('/', list);
+router.post('/follow/:id', secure('follow'), follow);
 router.get('/:id', get);
 router.post('/', upsert);
 router.put('/', secure('update'), upsert);
@@ -40,6 +41,14 @@ function remove(req, res, next) {
     Controller.remove(req.params.id)
         .then(() => {
             response.success(req, res, 'Se elimino correctamente');
+        })
+        .catch(next);
+}
+
+function follow(req, res, next) {
+    Controller.follow(req.user.id, req.params.id)
+        .then(data => {
+            response.success(req, res, data, 201)
         })
         .catch(next);
 }

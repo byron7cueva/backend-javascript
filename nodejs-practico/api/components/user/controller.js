@@ -24,7 +24,8 @@ module.exports = class UserController {
         
         const user = {
             id: id || nanoid(),
-            name
+            name,
+            username
         };
 
         if(password || username) {
@@ -44,5 +45,14 @@ module.exports = class UserController {
         }
 
         return this.store.remove(TABLA, id);
+    }
+
+    follow(from, to) {
+        const userFollow = {
+            user_from: from,
+            user_to: to
+        };
+
+        return this.store.upsert(`${TABLA}_follow`, userFollow);
     }
 }

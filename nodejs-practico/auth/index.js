@@ -6,6 +6,7 @@ const error = require('../utils/error');
 const secrect = config.jwt.secrect;
 
 exports.sign  = function(data) {
+    console.log(secrect);
     return jwt.sign(data, secrect);
 }
 
@@ -22,6 +23,9 @@ exports.check = {
             throw error('No puedes hacer esto', 401);
         }
     },
+    logged: function(req) {
+        decodeHeader(req);
+    }
 };
 
 /**

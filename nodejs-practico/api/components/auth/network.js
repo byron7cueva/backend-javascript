@@ -8,9 +8,11 @@ router.post('/login', login);
 
 
 function login(req, res, next) {
+    console.group('login');
     Controller.login(req.body.username, req.body.password)
         .then(token => {
             response.success(req, res, token, 200);
+            console.groupEnd('login');
         })
         .catch(next);
 }
