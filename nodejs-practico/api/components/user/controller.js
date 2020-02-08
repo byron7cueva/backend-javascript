@@ -55,4 +55,12 @@ module.exports = class UserController {
 
         return this.store.upsert(`${TABLA}_follow`, userFollow);
     }
+
+    async following(user) {
+        const join = {};
+        // Creando objeto para indicar la relación
+        join[TABLA] = 'user_to'; //{user: 'user_to'}
+        const query = {user_from: user};
+        return await this.store.query(`${TABLA}_follow`, query, join);
+    }
 }

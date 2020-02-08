@@ -84,10 +84,19 @@ function upsert(table, data) {
     }
 }
 
-function query(table, condition) {
+function query(table, condition, join) {
+    let joinQuery = '';
+    if(join) {
+        const key = Object.keys(join)[0];
+        const val = join[key];
+        joinQuery = `JOIN ${key} ON ${table}.${val} = ${key}.id`;
+    };
+
+    console.log(joinQuery);
+
     return new Promise((resolve, reject) => {
         // El modulo mysql resuelve los campos a traves del objeto
-        connection.query(`SELECT * FROM ${table} WHERE ?`, condition, (error, result) => {
+        connection.query(`SELECT * FROM ${table} ${joinQuery} WHERE ${table}.?`, condition, (error, result) => {
             if(error) return reject(error);
             resolve(result[0] || null);
         });
