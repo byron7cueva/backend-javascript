@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const response = require('../../../network/response');
 const Controller = require('./index');
+const secure = require('./secure');
 
 const router = Router();
 
@@ -8,7 +9,7 @@ const router = Router();
 router.get('/', list);
 router.get('/:id', get);
 router.post('/', upsert);
-router.put('/', upsert);
+router.put('/', secure('update'), upsert);
 router.delete('/:id', remove);
 
 function list(req, res) {

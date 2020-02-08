@@ -15,7 +15,13 @@ function verify(token) {
 exports.check = {
     own: function(req, owner) {
         const decoded = decodeHeader(req);
-        console.log(decoded);
+
+        // Comprobar si es o no propio
+        console.log(decoded.id);
+        console.log(owner);
+        if(decoded.id !== owner) {
+            throw new Error('No puedes hacer esto');
+        }
     },
 };
 
