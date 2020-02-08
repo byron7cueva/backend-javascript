@@ -7,14 +7,12 @@ const router = Router();
 router.post('/login', login);
 
 
-function login(req, res) {
+function login(req, res, next) {
     Controller.login(req.body.username, req.body.password)
         .then(token => {
             response.success(req, res, token, 200);
         })
-        .catch(error => {
-            response.error(req, res, error, 400, 'Información invalida');
-        })
+        .catch(next);
 }
 
 

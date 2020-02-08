@@ -12,11 +12,10 @@ exports.success = function(req, res, data, status = 200) {
 /**
  * Respuesta con error
  */
-exports.error = function(req, res, detail, status = 500, data = 'Internal error') {
-    console.error(detail);
+exports.error = function(req, res, data = 'Internal error', status = 500) {
     res.status(status).send({
-        error: false,
-        body: data,
+        error: data,
+        body: null,
         status: status
     });
 }
