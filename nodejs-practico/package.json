@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "sh run.sh",
+    "start:api": "sh run.sh",
     "start:mysqlService": "sh runMysqlService.sh"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "nanoid": "^2.1.11",
+    "request": "^2.88.0",
     "swagger-ui-express": "^4.1.3"
   }
 }

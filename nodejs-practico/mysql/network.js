@@ -9,6 +9,7 @@ router.get('/:table', list);
 router.get('/:table/:id', get);
 router.post('/:table', insert);
 router.put('/:table', upsert);
+router.post('/:table/query', query);
 
 // Function
 
@@ -30,6 +31,11 @@ async function insert(req, res) {
 async function upsert(req, res) {
     const data = await Store.upsert(req,params.table, req.body);
     response.success(req, res, data, 201);
+}
+
+async function query(req, res) {
+    const data = await Store.query(req.params.table, req.body.query, req.body.join);
+    response.success(req, res, data);
 }
 
 module.exports = router;
