@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:api": "sh run.sh",
+    "start:api": "sh runApiService.sh",
+    "start:post": "sh runPostService.sh",
     "start:mysqlService": "sh runMysqlService.sh"
   },
   "keywords": [],
