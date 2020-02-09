@@ -1,4 +1,3 @@
-const nanoid = require('nanoid');
 const auth = require('../auth');
 
 const TABLA = 'user';
@@ -23,7 +22,7 @@ module.exports = class UserController {
         }
         
         const user = {
-            id: id || nanoid(),
+            id: id,
             name,
             username
         };

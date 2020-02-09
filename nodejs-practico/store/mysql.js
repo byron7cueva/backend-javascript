@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const nanoid = require('nanoid');
 const config = require('../config').mysql;
 
 const connectionCofig = {
@@ -49,7 +50,7 @@ function get(table, id) {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM ${table} WHERE id='${id}'`, (error, data) => {
             if(error) return reject(error);
-            resolve(data);
+            resolve(data[0] || null);
         });
     });
 }
@@ -80,6 +81,7 @@ function upsert(table, data) {
     if(data && data.id) {
         return update(table, data);
     } else {
+        data.id = nanoid();
         return insert(table, data);
     }
 }
