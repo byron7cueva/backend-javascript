@@ -1,0 +1,36 @@
+{
+    "version": 2,
+    "env": {
+        "MYSQL_HOST": "@mysql_host",
+        "MYSQL_USER": "@mysql_user",
+        "MYSQL_PASS": "@mysql_pass",
+        "MYSQL_DB": "@mysql_db",
+        "JWT_SECRET": "@jwt_secret",
+        "POST_PORT": "3002",
+        "API_PORT": "3000"
+    },
+    "builds": [
+        {
+            "src": "api/index.js",
+            "use": "@now/node"
+        },
+        {
+            "src": "post/index.js",
+        "use": "@now/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/auth(.*)",
+            "dest": "/api/index.js"
+        },
+        {
+            "src": "/api/user(.*)",
+            "dest": "/api/index.js"
+        },
+        {
+            "src": "/api/post(.*)",
+            "dest": "/post/index.js"
+        }
+    ]
+}
