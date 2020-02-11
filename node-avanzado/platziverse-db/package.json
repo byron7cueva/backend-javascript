@@ -4,8 +4,11 @@
   "description": "A simple IOT patform - DB Module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "standard"
   },
   "author": "MIT",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^14.3.1"
+  }
 }
