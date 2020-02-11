@@ -10,4 +10,4 @@ app.use('/', router);
 
 app.listen(config.cacheService.port, () => {
     console.log(`Servicio corriendo y escuchando desde el puerto ${config.cacheService.port}`);
-}
+});

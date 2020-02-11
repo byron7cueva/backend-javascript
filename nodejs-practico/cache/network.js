@@ -22,7 +22,7 @@ async function get(req, res) {
 }
 
 async function upsert(req, res) {
-    const data = await Store.upsert(req,params.table, req.body);
+    const data = await Store.upsert(req.params.table, req.body);
     response.success(req, res, data, 201);
 }
 
