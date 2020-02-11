@@ -4,16 +4,36 @@ const TABLA = 'user';
 
 module.exports = class UserController {
 
-    constructor(store) {
-        this.store = store || require('../../../store/dummy');
+    constructor(injectStore, injectCache) {
+        this.store = injectStore || require('../../../store/dummy');
+        this.cache = injectCache || require('../../../store/dummy');
     }
 
-    list() {
-        return this.store.list(TABLA);
+    async list() {
+        let users = await this.cache.list(TABLA);
+
+        if(!users) {
+            console.log('No estaba en cache. Traendo de la Base de datos');
+            users = await this.store.list(TABLA);
+            await this.cache.upsert(TABLA, users);
+        } else {
+            console.log('Se obtienen los datos de cache');
+        }
+        return users;
     }
 
-    get(id) {
-        return this.store.get(TABLA, id);
+    async get(id) {
+        let user = await this.cache.get(TABLA, id);
+
+        if(!user) {
+            console.log('No estaba en cache. Se busca en la base de datos');
+            user = await this.store.get(TABLA, id);
+            await this.cache.upsert(TABLA, user);
+        } else {
+            console.log('Se obtienen datos desde cache');
+        }
+
+        return user;
     }
 
     async upsert({id = null, name = null, password = null, username = null}) {

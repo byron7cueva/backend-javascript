@@ -1,6 +1,4 @@
 const redis = require('redis');
-const { promisify } = require("util");
-
 const config = require('../config');
 
 const client = redis.createClient({
@@ -9,19 +7,14 @@ const client = redis.createClient({
     password: config.redis.password
 });
 
-const keyAsync = promisify(client.keys).bind(client);
-const mgetAsync = promisify(client.mget).bind(client);
-
-async function list(table) {
-    const keys = await keyAsync(`${table}*`);
-    let result = [];
-    if(Array.isArray(keys) && keys.length > 0) {
-        result = await mgetAsync(keys);
-    }
-    const resp = result.map(item => {
-        return JSON.parse(item);
-    });
-    return resp;
+function list(table) {
+    return new Promise((resolve, reject) => {
+        client.get(table, (error, result) => {
+            if(error) return Promise.reject(error);
+            const resp = JSON.parse(result);
+            resolve(resp);
+        })
+    }); 
 }
 
 function get(table, id) {
@@ -34,7 +27,7 @@ async function upsert(table, data) {
     if(data && data.id) {
         key += `_${data.id}`;
     }
-    client.setex(key, 60, JSON.stringify(data));
+    client.setex(key, 10, JSON.stringify(data));
     return true;
 }
 
