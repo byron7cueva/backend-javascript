@@ -1,4 +1,4 @@
-module.exports = function setupAgent (AngentModel) {
+module.exports = function setupAgent (AgentModel) {
   async function createOrUpdate (agent) {
     // Condicion
     const cond = {
@@ -8,30 +8,63 @@ module.exports = function setupAgent (AngentModel) {
     }
 
     // Retorna la primera ocurrencia que cumpla con la condicion
-    const existAgent = await AngentModel.findOne(cond)
+    const existAgent = await AgentModel.findOne(cond)
 
     if(existAgent) {
       // Actualizando el objeto que cumpla con la condicion
       // Esto devuelve el numero de filas que fueron actualizadas
-      const updated = await AngentModel.update(agent, cond)
+      const updated = await AgentModel.update(agent, cond)
       // Si fue mas de una entonces devuelvo el objeto actualizado
       // Caso contrario devuelvo el mismo objeto
       // Esto quiere decir que no fue alterado
-      return updated? await AngentModel.findOne(cond) : existAgent
+      return updated? await AgentModel.findOne(cond) : existAgent
     }
 
     // Creando el agente
-    const result = await AngentModel.create(agent)
+    const result = await AgentModel.create(agent)
     // Sequelize devuelve un objeto complejo por ello devuelvo en json
     return result.toJSON();
   }
 
   function findById (id) {
-    return AngentModel.findById(id)
+    return AgentModel.findById(id)
+  }
+
+  function findByUuid (uuid) {
+    return AgentModel.findOne({
+      where: {
+        uuid
+      }
+    })
+  }
+
+  function findAll() {
+    return AgentModel.findAll()
+  }
+
+  function findConnected () {
+    return AgentModel.findAll({
+      where: {
+        connected: true
+      }
+    })
+  }
+
+  function findByUsername (username) {
+    return AgentModel.findAll({
+      where: {
+        username,
+        connected: true
+      }
+    })
   }
 
   return {
     findById,
-    createOrUpdate
+    createOrUpdate,
+    findByUuid,
+    findAll,
+    findConnected,
+    findByUsername
   }
 }
