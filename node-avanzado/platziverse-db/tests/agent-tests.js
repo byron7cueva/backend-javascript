@@ -20,8 +20,14 @@ let AgentStub = null
 
 // Es un ambiente especifico para utilizarlo en un caso particular y poderlo reiniciarlo
 let sanbox = null
-// const single = Object.assign({}, agentFixtures.single)
+const single = Object.assign({}, agentFixtures.single)
 const id = 1
+const uuid = 'yyy-yyy-yyy'
+const uuidArgs = {
+  where: {
+    uuid
+  }
+}
 
 // Esto se ejecuta antes de cada test
 test.beforeEach(async () => {
@@ -30,12 +36,20 @@ test.beforeEach(async () => {
   AgentStub = {
     hasMany: sanbox.spy(),
     // Crando una funcion falsa
-    findById: sanbox.stub()
+    findById: sanbox.stub(),
+    findOne: sanbox.stub(),
+    update: sanbox.stub()
   }
 
   // Cuando llame a la funcion con el valor que tiene id  me retorne
   // Una promesa la cual me devuelve el fixture byId con el Id
   AgentStub.findById.withArgs(id).returns(Promise.resolve(agentFixtures.byId(id)))
+
+  // findOne
+  AgentStub.findOne.withArgs(uuidArgs).returns(Promise.resolve(agentFixtures.byUuid(uuid)))
+
+  // Update
+  AgentStub.update.withArgs(single, uuidArgs).returns(Promise.resolve(single))
 
   // Con proxy requiere al traer la dependencia va sobrescribir sus dependencias
   // Para ello se debe indicar el path de la dependencia y sobreescribir lo que devuelve
@@ -76,4 +90,15 @@ test.serial('Agent#findById', async t => {
   t.true(AgentStub.findById.calledWith(id), 'findById should be called with specify id')
 
   t.deepEqual(agent, agentFixtures.byId(id), 'should be the same')
+})
+
+test.serial('Agent#createOrUpdate - exist', async t => {
+  let agent = await db.Agent.createOrUpdate(single)
+
+  t.true(AgentStub.findOne.called, 'findOne should be called on model')
+  t.true(AgentStub.findOne.calledTwice, 'findOnd should be called twice')
+  t.true(AgentStub.update.called, 'update should be called on model')
+  t.true(AgentStub.update.calledOnce, 'update should be called once')
+
+  t.deepEqual(agent, single, 'agent should be the same')
 })
