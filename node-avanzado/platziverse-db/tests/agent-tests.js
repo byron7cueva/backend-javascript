@@ -3,6 +3,8 @@
 const test = require('ava')
 const proxyquire = require('proxyquire')
 const sinon = require('sinon')
+const agentFixtures = require('./fixtures/agent')
+
 let db = null
 const config = {
   logging: () => {}
@@ -18,6 +20,8 @@ let AgentStub = null
 
 // Es un ambiente especifico para utilizarlo en un caso particular y poderlo reiniciarlo
 let sanbox = null
+let single = Object.assign({}, agentFixtures.single)
+let id = 1
 
 // Esto se ejecuta antes de cada test
 test.beforeEach(async () => {
@@ -54,4 +58,9 @@ test.serial('Setup', t => {
   t.true(MetricStub.belongsTo.called, 'MetricModel.belongsTo was execute')
   t.true(AgentStub.hasMany.calledWith(MetricStub), 'Argument should be the MetricModel')
   t.true(MetricStub.belongsTo.calledWith(AgentStub), 'Argumnet should be the AgentModel')
+})
+
+test.serial('Agent#findById', async t => {
+  let agent = await db.Agent.findById(id)
+  t.deepEqual(agent, agentFixtures.byId(id), 'should be the same')
 })
