@@ -10,20 +10,20 @@ module.exports = function setupAgent (AgentModel) {
     // Retorna la primera ocurrencia que cumpla con la condicion
     const existAgent = await AgentModel.findOne(cond)
 
-    if(existAgent) {
+    if (existAgent) {
       // Actualizando el objeto que cumpla con la condicion
       // Esto devuelve el numero de filas que fueron actualizadas
       const updated = await AgentModel.update(agent, cond)
       // Si fue mas de una entonces devuelvo el objeto actualizado
       // Caso contrario devuelvo el mismo objeto
       // Esto quiere decir que no fue alterado
-      return updated? await AgentModel.findOne(cond) : existAgent
+      return updated ? AgentModel.findOne(cond) : existAgent
     }
 
     // Creando el agente
     const result = await AgentModel.create(agent)
     // Sequelize devuelve un objeto complejo por ello devuelvo en json
-    return result.toJSON();
+    return result.toJSON()
   }
 
   function findById (id) {
@@ -38,7 +38,7 @@ module.exports = function setupAgent (AgentModel) {
     })
   }
 
-  function findAll() {
+  function findAll () {
     return AgentModel.findAll()
   }
 
