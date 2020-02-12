@@ -1,10 +1,27 @@
 'use strict'
+const defaults = require('defaults')
 
 const setupDatabase = require('./lib/db')
 const setupAgentModel = require('./models/agent')
 const setupMetricModel = require('./models/metric')
 
 module.exports = async function (config) {
+  // Si no tiene valores tome los siguintes por defecto
+  config = defaults(config, {
+    dialect: 'sqlite',
+    pool: {
+      max: 10,
+      min: 0,
+      // Tiempo de vida si la conexion no es utilizada
+      idle: 10000
+    },
+    query: {
+      // Que me entrege objetos JSON sencillos sequelize
+      // Sequelize entrega objetos complejos por defecto
+      raw: true
+    }
+  })
+
   const sequelize = setupDatabase(config)
   const AgentModel = setupAgentModel(config)
   const MetricModel = setupMetricModel(config)

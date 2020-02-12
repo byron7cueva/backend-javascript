@@ -20,7 +20,7 @@ async function setup () {
 
   // Validando la respuesta del usuario
   if (!answere.setup) {
-    return console.log('Nothing happened!');
+    return console.log('Nothing happened!')
   }
 
   const config = {

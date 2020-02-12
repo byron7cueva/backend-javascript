@@ -4,17 +4,21 @@
   "description": "A simple IOT patform - DB Module",
   "main": "index.js",
   "scripts": {
+    "test": "DEBUG=platziverse:* ava tests/*-tests.js --verbose",
     "setup": "DEBUG=platziverse:* node setup.js",
     "lint": "standard"
   },
   "author": "MIT",
   "license": "MIT",
   "devDependencies": {
+    "ava": "^3.3.0",
+    "sqlite3": "^4.1.1",
     "standard": "^14.3.1"
   },
   "dependencies": {
     "chalk": "^3.0.0",
     "debug": "^4.1.1",
+    "defaults": "^1.0.3",
     "inquirer": "^7.0.4",
     "pg": "^7.18.1",
     "pg-hstore": "^2.3.3",
