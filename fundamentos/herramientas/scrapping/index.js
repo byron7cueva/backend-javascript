@@ -3,6 +3,8 @@ const puppeteer = require('puppeteer');
 (async () => {
   console.log('Lanzamos navgador!');
   const browser = await puppeteer.launch();
+  // Correr en arch linux
+  // const browser = await puppeteer.launch({headless: false, args: ['--disable-gpu']});
   // Se lance pero que se abra
   // const browser = await puppeteer.launch({headless: false});
 
