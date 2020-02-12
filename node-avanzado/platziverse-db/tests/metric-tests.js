@@ -32,3 +32,7 @@ test.beforeEach(async () => {
 test('Metric', t => {
   t.truthy(db.Metric, 'Metric should exist')
 })
+
+test.afterEach(() => {
+  sanbox && sanbox.restore()
+})
