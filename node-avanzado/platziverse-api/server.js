@@ -2,11 +2,14 @@ const debug = require('debug')('platziverse:api')
 const http = require('http')
 const express = require('express')
 const chalk = require('chalk')
+const asyncify = require('express-asyncify')
 
 const api = require('./api')
 
 const port = process.env.PORT || 3000
-const app = express()
+
+// Dando soporte de async/awair
+const app = asyncify(express())
 const server = http.createServer(app)
 
 // Middlewares
@@ -18,13 +21,13 @@ app.use('/api', api)
 app.use((error, req, res, next) => {
   debug(`Error: ${error.message}`)
   if (error.message.match(/not found/)) {
-    return res.status(404).send({error: error.message})
+    return res.status(404).send({ error: error.message })
   }
 
-  res.status(500).send({error: error.message})
+  res.status(500).send({ error: error.message })
 })
 
-function handleFatalError(error) {
+function handleFatalError (error) {
   console.error(`${chalk.red('[fatal error]')} ${error.message}`)
   console.error(error.stack)
   process.exit(1)

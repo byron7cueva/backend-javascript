@@ -13,7 +13,7 @@ test.serial.cb('/api/agents', t => {
     .expect('Content-Type', /json/)
     .end((err, res) => {
       t.falsy(err, 'should not return an error')
-      let body = res.body
+      const body = res.body
       t.deepEqual(body, {}, 'response body shuld be the expected')
       // t.end() Es necesario cuando el test de tipo test.serial.cb indicando que termino
       t.end()
