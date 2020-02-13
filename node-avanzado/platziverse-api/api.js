@@ -28,24 +28,84 @@ api.use('*', async (req, res, next) => {
   next()
 })
 
-api.get('/agents', (req, res, next) => {
+/**
+ * Devuelve la lista de agentes
+ */
+api.get('/agents', async (req, res, next) => {
   debug('A request has come to /agents')
-  res.send({})
+
+  let agents = []
+  try {
+    agents = await Agent.findConnected()
+  } catch(error) {
+    return next(error)
+  }
+
+  res.send(agents)
 })
 
-api.get('/agent/:uuid', (req, res, next) => {
+/**
+ * Devuelve un agente a partir de su uuid
+ */
+api.get('/agent/:uuid', async (req, res, next) => {
   const { uuid } = req.params
-  res.send({ uuid })
+
+  debug(`request to /agent/${uuid}`)
+  let agent
+  try {
+    agent = await Agent.findByUuid(uuid)
+  } catch(error) {
+    return next(error)
+  }
+
+  if(!agent) {
+    return next(new Error(`Agent not found with uuid ${uuid}`))
+  }
+
+  res.send(agent)
 })
 
-api.get('/metrics/uuid', (req, res, next) => {
+/**
+ * Devuelve las metricas de un agente
+ */
+api.get('/metrics/:uuid', async (req, res, next) => {
   const { uuid } = req.params
-  res.send({ uuid })
+
+  debug(`request to /metrics/${uuid}`)
+  let metrics = []
+  try {
+    metrics = await Metric.findByAgentUuid(uuid)
+  } catch(error) {
+    return next(error)
+  }
+
+  if(!metrics || metrics.length === 0) {
+    return next(new Error(`Metrics not found for agent with uuid ${uuid}`))
+  }
+
+  res.send(metrics)
 })
 
-api.get('/metrics/:uuid:type', (req, res, next) => {
+/**
+ * Devuelve los ultimos 20 valores almacenados de metricas de un agente y por tipo
+ * de metrica
+ */
+api.get('/metrics/:uuid/:type', async (req, res, next) => {
   const { uuid, type } = req.params
-  res.send({ uuid, type })
+
+  debug(`request to /metrics/${uuid}/${type}`)
+  let metrics = []
+  try {
+    metrics = await Metric.findByTypeAgentUuid(type, uuid)
+  } catch (error) {
+    return next(error)
+  }
+
+  if (!metrics || metrics.length === 0) {
+    return next(new Error(`Metrics not found for agent with uuid ${uuid} and type ${type}`))
+  }
+
+  res.send(metrics)
 })
 
 module.exports = api
