@@ -120,16 +120,21 @@ server.on('published', async (packet, client) => {
         }
 
         // Store
+        const saveMetricPromise = []
         for (const metric of payload.metrics) {
-          let m
-          try {
-            m = await Metric.create(agent.uuid, metric)
-          } catch (error) {
-            return handleError(error)
-          }
-
-          debug(`Metric ${m.id} saved on agent ${agent.uuid}`)
+          saveMetricPromise.push(
+            new Promise((resolve, reject) => {
+              Metric.create(agent.uuid, metric)
+              .then(m => {
+                debug(`Metric ${m.id} saved on agent ${agent.uuid}`)
+                resolve(m)
+              })
+              .catch(reject)
+            })
+          )
         }
+        await Promise.all(saveMetricPromise)
+        debug('Termino de almacenar todas las metrica')
       }
       break
     }
