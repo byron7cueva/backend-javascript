@@ -5,6 +5,7 @@
   "main": "server.js",
   "private": true,
   "scripts": {
+    "test": "DEBUG=platziverse:* ava tests/*-tests.js --verbose",
     "start": "NODE_ENV=production node server.js",
     "start:dev": "DEBUG=platziverse:* nodemon server.js",
     "lint": "standard"
@@ -12,8 +13,10 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "ava": "^3.3.0",
     "nodemon": "^2.0.2",
-    "standard": "^14.3.1"
+    "standard": "^14.3.1",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "chalk": "^3.0.0",
