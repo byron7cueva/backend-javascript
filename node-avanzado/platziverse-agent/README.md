@@ -3,9 +3,9 @@
 ## Usage
 
 ```js
-const PlatzivreseAgent = require('platziverse-agent')
+const PlatziverseAgent = require('platziverse-agent')
 
-const agent = new PlatzivreseAgent({
+const agent = new PlatziverseAgent({
   interval: 2000
 })
 
