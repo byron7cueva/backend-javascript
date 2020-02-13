@@ -11,5 +11,11 @@
   "license": "MIT",
   "devDependencies": {
     "standard": "^14.3.1"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "defaults": "^1.0.3",
+    "mqtt": "^3.0.0",
+    "uuid": "^3.4.0"
   }
 }
