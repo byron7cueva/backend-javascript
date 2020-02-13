@@ -4,23 +4,29 @@ const debug = require('debug')('platziverse:db:setup')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 const db = require('./')
+const commander = require('commander')
+
+commander.option('-y, --yes', 'Acept the question and continue')
+commander.parse(process.argv)
 
 // Creando objeto para realizar preguntas
 const prompt = inquirer.createPromptModule()
 
 async function setup () {
-  // Realizando la pregunta por consola
-  const answere = await prompt([
-    {
-      type: 'confirm',
-      name: 'setup',
-      message: 'This will destroy your database, are you sure?'
+  if (!commander.yes) {
+    // Realizando la pregunta por consola
+    const answere = await prompt([
+      {
+        type: 'confirm',
+        name: 'setup',
+        message: 'This will destroy your database, are you sure?'
+      }
+    ])
+  
+    // Validando la respuesta del usuario
+    if (!answere.setup) {
+      return console.log('Nothing happened!')
     }
-  ])
-
-  // Validando la respuesta del usuario
-  if (!answere.setup) {
-    return console.log('Nothing happened!')
   }
 
   const config = {
