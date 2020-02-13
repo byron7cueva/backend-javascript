@@ -5,7 +5,7 @@ const mqtt = require('mqtt')
 const defaults = require('defaults')
 const uuid = require('uuid')
 const os = require('os')
-const {promisify} = require('util')
+const {promisify} = require('util') // Desde node8
 const {EventEmitter} = require('events');
 const {parsePayload} = require('./utils')
 
@@ -66,35 +66,33 @@ class PlatziverseAgent extends EventEmitter {
               metrics: [],
               timestamp: new Date().getTime()
             }
-          }
-
-          // Destructurin
-          for (let [metric, fn] of this._metrics) {
-            // Functionariti: El tamaño de los argumentos de una funcion
-            if (fn.length === 1) {
-              // Si es callback entonces la convierto a una promesa
-              fn = promisify(fn)
+              // Destructurin
+            for (let [metric, fn] of this._metrics) {
+              // Functionariti: El tamaño de los argumentos de una funcion
+              if (fn.length === 1) {
+                // Si es callback entonces la convierto a una promesa
+                fn = promisify(fn)
+              }
+              message.metrics.push({
+                type: metric,
+                // Ejecuta una funcion estatico, o una promesa
+                value: await Promise.resolve(fn())
+              })
             }
-            message.metrics.push({
-              type: metric,
-              // Ejecuta una funcion estatico, o una promesa
-              value: await Promise.resolve(fn())
-            })
+
+            debug(`Sending`, message)
+
+            // Emitiendo al servisor mqtt
+            this._client.publish('agent/message', JSON.stringify(message))
+
+            // Emitiendo a los suscriptores del agente
+            this.emit('message', message)
           }
-
-          debug(`Sending`, message)
-
-          // Emitiendo al servisor mqtt
-          this._client.publish('agent/message', JSON.stringify(message))
-
-          // Emitiendo a los suscriptores del agente
-          this.emit('message', message)
-
         }, this._ops.interval)
       })
 
       this._client.on('message', (topic, payload) => {
-        const payload = parsePayload(payload)
+        payload = parsePayload(payload)
 
         // Reentrasmitir el mensaje de nos llega desde el servidor mqtt
         let broadcast = false

@@ -1,9 +1,4 @@
-# Platziverse-agent
-
-## Usage
-
-```js
-const PlatziverseAgent = require('platziverse-agent')
+const PlatziverseAgent = require('../')
 
 const agent = new PlatziverseAgent({
   name: 'myapp',
@@ -42,4 +37,3 @@ function handler (payload) {
 }
 
 setTimeout(() => agent.disconnect(), 10000)
-```
