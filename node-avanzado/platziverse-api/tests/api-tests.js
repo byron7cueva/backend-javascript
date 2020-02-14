@@ -2,8 +2,35 @@
 
 const test = require('ava')
 const request = require('supertest')
+const sinon = require('sinon')
+const proxyquire = require('proxyquire')
 
-const server = require('../server')
+let sanbox = null
+let server = null
+let dbStub = null, AgentStub = {}, MetricStub = {}
+
+test.beforeEach(async () => {
+  sanbox = sinon.createSandbox()
+
+  dbStub = sanbox.stub()
+  dbStub.returns(Promise.resolve({
+    Agent: AgentStub,
+    Metric: MetricStub
+  }))
+
+  // Sobreescribiendo las dependencias
+  const api = proxyquire('../api', {
+    'platziverse-db': dbStub
+  })
+
+  server = proxyquire('../server', {
+    './api': api
+  })
+})
+
+test.afterEach(() => {
+  sanbox && sanbox.restore()
+})
 
 // Para probar funciones de tipo callback
 test.serial.cb('/api/agents', t => {
