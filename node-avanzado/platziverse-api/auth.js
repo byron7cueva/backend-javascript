@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 
 /**
  * Frima el toquen
- * @param {*} payload 
- * @param {*} secret 
+ * @param {*} payload
+ * @param {*} secret
  */
 function sign (payload, secret, callback) {
   jwt.sign(payload, secret, callback)

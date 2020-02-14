@@ -6,6 +6,7 @@ const db = require('platziverse-db')
 const asyncify = require('express-asyncify')
 const config = require('./config')
 const auth = require('express-jwt')
+const guard = require('express-jwt-permissions')()
 
 // Dando soporte de async/await a las rutas
 const api = asyncify(Router())
@@ -16,7 +17,7 @@ let services, Agent, Metric
 api.use('*', async (req, res, next) => {
   // La connecion a la base de datos se realiza una sola vez
   if (!services) {
-    debug(`Connecting to database`)
+    debug('Connecting to database')
     try {
       services = await db(config.db)
     } catch (error) {
@@ -35,19 +36,19 @@ api.use('*', async (req, res, next) => {
 api.get('/agents', auth(config.auth), async (req, res, next) => {
   debug('A request has come to /agents')
 
-  const {user} = req
-  if(!user || !user.username) {
+  const { user } = req
+  if (!user || !user.username) {
     return next(new Error('Not authorized'))
   }
 
   let agents = []
   try {
-    if(user.admin) {
+    if (user.admin) {
       agents = await Agent.findConnected()
     } else {
       agents = await Agent.findByUsername(user.username)
     }
-  } catch(error) {
+  } catch (error) {
     return next(error)
   }
 
@@ -64,11 +65,11 @@ api.get('/agent/:uuid', async (req, res, next) => {
   let agent
   try {
     agent = await Agent.findByUuid(uuid)
-  } catch(error) {
+  } catch (error) {
     return next(error)
   }
 
-  if(!agent) {
+  if (!agent) {
     return next(new Error(`Agent not found with uuid ${uuid}`))
   }
 
@@ -78,18 +79,18 @@ api.get('/agent/:uuid', async (req, res, next) => {
 /**
  * Devuelve las metricas de un agente
  */
-api.get('/metrics/:uuid', async (req, res, next) => {
+api.get('/metrics/:uuid', auth(config.auth), guard.check(['metrics:read']), async (req, res, next) => {
   const { uuid } = req.params
 
   debug(`request to /metrics/${uuid}`)
   let metrics = []
   try {
     metrics = await Metric.findByAgentUuid(uuid)
-  } catch(error) {
+  } catch (error) {
     return next(error)
   }
 
-  if(!metrics || metrics.length === 0) {
+  if (!metrics || metrics.length === 0) {
     return next(new Error(`Metrics not found for agent with uuid ${uuid}`))
   }
 
