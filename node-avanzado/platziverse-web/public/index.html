@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Plaziverse</title>
+</head>
+<body>
+  <h1>Plaziverse</h1>
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript">
+    var socket = io.connect()
+
+    socket.on('agent/message', function (payload) {
+      console.log(payload)
+    })
+
+    setTimeout(function() {
+      socket.emit('agent/message', 'hello server!')
+    }, 6000)
+  </script>
+</body>
+</html>
