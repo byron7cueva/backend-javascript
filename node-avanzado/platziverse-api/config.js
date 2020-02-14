@@ -10,5 +10,8 @@ module.exports = {
     host: process.env.Db_HOST || '192.168.1.2',
     dialect: 'postgres',
     logging: message => debug(message)
+  },
+  auth: {
+    secret: process.env.SECRET || 'platzi'
   }
 }

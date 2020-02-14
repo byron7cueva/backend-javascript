@@ -5,6 +5,7 @@ const { Router } = require('express')
 const db = require('platziverse-db')
 const asyncify = require('express-asyncify')
 const config = require('./config')
+const auth = require('express-jwt')
 
 // Dando soporte de async/await a las rutas
 const api = asyncify(Router())
@@ -31,12 +32,21 @@ api.use('*', async (req, res, next) => {
 /**
  * Devuelve la lista de agentes
  */
-api.get('/agents', async (req, res, next) => {
+api.get('/agents', auth(config.auth), async (req, res, next) => {
   debug('A request has come to /agents')
+
+  const {user} = req
+  if(!user || !user.username) {
+    return next(new Error('Not authorized'))
+  }
 
   let agents = []
   try {
-    agents = await Agent.findConnected()
+    if(user.admin) {
+      agents = await Agent.findConnected()
+    } else {
+      agents = await Agent.findByUsername(user.username)
+    }
   } catch(error) {
     return next(error)
   }
