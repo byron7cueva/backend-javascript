@@ -1,6 +1,10 @@
 <template>
   <div>
-    <metric uuid="3287320c-22af-4250-a9e2-4c3fe3e925a2" type="promiseMetric"></metric>
+    <metric
+      uuid="628f5475-d7d7-4c47-be01-a80e17359aa0"
+      type="promiseMetric"
+      :socket="socket" >
+    </metric>
     <agent
       v-for="agent in agents"
       :uuid="agent.uuid"
@@ -19,12 +23,15 @@
 </style>
 
 <script>
+const io = require('socket.io-client')
+const socket = io.connect()
 
 module.exports = {
   data () {
     return {
       agents: [],
-      error: null
+      error: null,
+      socket
     }
   },
 
