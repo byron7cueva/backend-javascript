@@ -6,10 +6,14 @@ const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 const {agentFixtures, metricFixtures} = require('platziverse-test-util/fixtures')
 const {bodyError} = require('platziverse-test-util/util')
+const auth = require('../auth')
+const {promisify} = require('util')
+const config = require('../config')
 
-let sanbox = null
-let server = null
-let dbStub = null, AgentStub = {}, MetricStub = {}
+const sign = promisify(auth.sign)
+
+let sanbox = null, server = null, dbStub = null, AgentStub = {}, MetricStub = {}
+let token = null
 const uuidExistArgs = 'yyy-yyy-yyy'
 const uuidNoExistArgs = 'xxx'
 const uuidThrowArgs = 1
@@ -42,6 +46,8 @@ test.beforeEach(async () => {
   MetricStub.findByTypeAgentUuid.withArgs(type, uuidExistArgs).returns(Promise.resolve(metricFixtures.findByTypeAgentUuid(type, uuidExistArgs)))
   MetricStub.findByTypeAgentUuid.withArgs(type, uuidNoExistArgs).returns(Promise.resolve(null))
 
+  token = await sign({admin: true, username: 'platzi'}, config.auth.secret)
+
   // Sobreescribiendo las dependencias
   const api = proxyquire('../api', {
     'platziverse-db': dbStub
@@ -60,6 +66,8 @@ test.afterEach(() => {
 test.serial.cb('/api/agents', t => {
   request(server)
     .get('/api/agents')
+    // Asignando la cabecera de autorizacion
+    .set('Authorization', `Bearer ${token}`)
     .expect(200)
     .expect('Content-Type', /json/)
     .end((err, res) => {
