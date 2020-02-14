@@ -1,0 +1,19 @@
+{
+  "name": "platziverse-cli",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A simple Iot Platfomr - CLI",
+  "bin": "platziverse.js",
+  "scripts": {
+    "lint": "standard"
+  },
+  "author": "byron7cueva <byron7cueva@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^14.3.1"
+  },
+  "dependencies": {
+    "args": "^5.0.1",
+    "minimist": "^1.2.0"
+  }
+}
