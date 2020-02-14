@@ -3,7 +3,7 @@ const PlatziverseAgent = require('../')
 const agent = new PlatziverseAgent({
   name: 'myapp',
   username: 'admin',
-  interval: 2000
+  interval: 5000
 })
 
 agent.addMetric('rss', function getRss() {
