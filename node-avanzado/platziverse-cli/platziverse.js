@@ -1,31 +1,39 @@
 #!/usr/bin/env node
 
-// Hash bank en unix
-// Que dice este escript que viene a continuacion vamos a ejecutarlo con este binario
-'use strict'
+'use restrict'
+/* eslint new-cap: "off" */
+/* eslint no-unused-vars: "off" */
 
-/*
-const minimist = require('minimist')
-const args = minimist(process.argv)
-console.log(args.host)
-console.log(args.name)
-*/
+const blessed = require('blessed')
+const contrib = require('blessed-contrib')
 
-// Un array
-// [0] Binario de node
-// [1] El archivo que esta ejecutando
-// Los siguientes argumentos que le paso al ejecutar
-// console.log(process.argv)
+// Obteniendo la instancia de screen de blessed
+const screen = blessed.screen()
 
-const args = require('args')
+// Creando un grid
+const grid = new contrib.grid({
+  rows: 1,
+  cols: 4,
+  screen
+})
 
-args
-  .option('port', 'The port on which the app will be running', 3000)
-  .option('reaload', 'Enable/disable livereloading')
-  .command('serve', 'Serve you static site', ['s'])
+// Creando un arbo
+// set(fila, columna, cunto_en_filas_ocupa, cunto_en_columnas_ocupa, componente_hereda, opciones
+const tree = grid.set(0, 0, 1, 1, contrib.tree, {
+  label: 'Connected Agents'
+})
 
-  const flags = args.parse(process.argv)
-  // ./platziverse.js -h Devuelve las opciones que tiene el comando
+// Creando la grafica
+const line = grid.set(0, 1, 1, 3, contrib.line, {
+  label: 'Metric',
+  showLegend: true,
+  minY: 0,
+  xPadding: 5
+})
 
+// Capturar las teclas
+screen.key(['escape', 'q', 'C-c'], (ch, key) => {
+  process.exit(0)
+})
 
-console.log('Hello platziverse')
+screen.render()
