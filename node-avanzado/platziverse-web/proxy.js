@@ -10,9 +10,9 @@ const api = asyncify(Router())
 api.get('/agents', async (req, res, next) => {
   const options = {
     method: 'GET',
-    utl: `${endpoint}/api/agents`,
+    url: `${endpoint}/api/agents`,
     headers: {
-      'Autorization': 'Bearer ${apiToken}'
+      'Authorization': `Bearer ${apiToken}`
     },
     json: true
   }
@@ -20,17 +20,74 @@ api.get('/agents', async (req, res, next) => {
   let result
   try {
     result = await request(options)
-  } catch(error) {
-    return next(error)
+  } catch (e) {
+    return next(new Error(e.error.error))
   }
 
   res.send(result)
 })
 
-api.get('/agent/:uuid', (req, res) => {})
+api.get('/agent/:uuid', async (req, res, next) => {
+  const { uuid } = req.params
+  const options = {
+    method: 'GET',
+    url: `${endpoint}/api/agent/${uuid}`,
+    headers: {
+      'Authorization': `Bearer ${apiToken}`
+    },
+    json: true
+  }
 
-api.get('/mertics/:uuid', (req, res) => {})
+  let result
+  try {
+    result = await request(options)
+  } catch (e) {
+    return next(new Error(e.error.error))
+  }
 
-api.get('/metrics/:uuid/:type', (req, res) => {})
+  res.send(result)
+})
+
+api.get('/metrics/:uuid', async (req, res, next) => {
+  const { uuid } = req.params
+  const options = {
+    method: 'GET',
+    url: `${endpoint}/api/metrics/${uuid}`,
+    headers: {
+      'Authorization': `Bearer ${apiToken}`
+    },
+    json: true
+  }
+
+  let result
+  try {
+    result = await request(options)
+  } catch (e) {
+    return next(new Error(e.error.error))
+  }
+
+  res.send(result)
+})
+
+api.get('/metrics/:uuid/:type', async (req, res, next) => {
+  const { uuid, type } = req.params
+  const options = {
+    method: 'GET',
+    url: `${endpoint}/api/metrics/${uuid}/${type}`,
+    headers: {
+      'Authorization': `Bearer ${apiToken}`
+    },
+    json: true
+  }
+
+  let result
+  try {
+    result = await request(options)
+  } catch (e) {
+    return next(new Error(e.error.error))
+  }
+
+  res.send(result)
+})
 
 module.exports = api
