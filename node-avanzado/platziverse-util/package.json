@@ -1,0 +1,14 @@
+{
+  "name": "platziverse-util",
+  "version": "1.0.0",
+  "description": "A simple util for platziverse project",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^14.3.1"
+  }
+}

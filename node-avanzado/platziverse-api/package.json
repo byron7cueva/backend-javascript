@@ -5,7 +5,7 @@
   "main": "server.js",
   "private": true,
   "scripts": {
-    "test": "DEBUG=platziverse:* ava tests/*-tests.js --verbose",
+    "test": "DEBUG=platziverse:* nyc --reporter=lcov ava tests/*-tests.js --verbose",
     "start": "NODE_ENV=production node server.js",
     "start:dev": "DEBUG=platziverse:* nodemon server.js",
     "lint": "standard"
@@ -15,11 +15,12 @@
   "devDependencies": {
     "ava": "^3.3.0",
     "nodemon": "^2.0.2",
+    "nyc": "^15.0.0",
+    "platziverse-test-util": "file:../platziverse-test-util",
     "proxyquire": "^2.1.3",
     "sinon": "^8.1.1",
     "standard": "^14.3.1",
-    "supertest": "^4.0.2",
-    "platziverse-test-util": "file:../platziverse-test-util"
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "chalk": "^3.0.0",
