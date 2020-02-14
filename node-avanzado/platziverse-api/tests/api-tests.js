@@ -19,6 +19,9 @@ test.beforeEach(async () => {
     Metric: MetricStub
   }))
 
+  AgentStub.findConnected = sanbox.stub()
+  AgentStub.findConnected.returns(Promise.resolve(agentFixtures.connected))
+
   // Sobreescribiendo las dependencias
   const api = proxyquire('../api', {
     'platziverse-db': dbStub
