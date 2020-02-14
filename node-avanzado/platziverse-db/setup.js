@@ -22,7 +22,7 @@ async function setup () {
         message: 'This will destroy your database, are you sure?'
       }
     ])
-  
+
     // Validando la respuesta del usuario
     if (!answere.setup) {
       return console.log('Nothing happened!')

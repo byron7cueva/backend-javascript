@@ -3,7 +3,7 @@
 const test = require('ava')
 const proxyquire = require('proxyquire')
 const sinon = require('sinon')
-const agentFixtures = require('./fixtures/agent')
+const { agentFixtures } = require('platziverse-test-util/fixtures')
 
 let db = null
 const config = {

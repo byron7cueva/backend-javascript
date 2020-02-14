@@ -3,9 +3,8 @@
 const test = require('ava')
 const proxyquire = require('proxyquire')
 const sinon = require('sinon')
-const metricFixtures = require('./fixtures/metric')
-const agentFixtures = require('./fixtures/agent')
-const { extend } = require('./util')
+const { agentFixtures, metricFixtures } = require('platziverse-test-util/fixtures')
+const { extend } = require('platziverse-test-util/util')
 
 const config = {
   logging: () => {}
@@ -64,7 +63,7 @@ test.beforeEach(async () => {
 
   MetricStub.findAll.withArgs(byTypeAndUuidArgs).returns(Promise.resolve(metricFixtures.findByTypeAgentUuid(type, uuid)))
   MetricStub.findAll.withArgs(byUuidArgs).returns(Promise.resolve(metricFixtures.findByAgentUuid(uuid)))
-  
+
   AgentStub.findOne.withArgs(findOneArgs).returns(Promise.resolve(agentFixtures.byUuid(uuid)))
   MetricStub.create.withArgs(newMetric).returns(Promise.resolve({
     toJSON () { return newMetric }
