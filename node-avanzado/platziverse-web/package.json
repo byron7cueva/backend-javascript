@@ -5,23 +5,46 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node server.js",
-    "start:dev": "DEBUG=platziverse:* nodemon server.js",
+    "prestart": "npm run build",
+    "start-dev": "DEBUG=platziverse:* nodemon server.js",
+    "prestart-dev": "npm run build",
+    "build": "browserify -t babelify -t vueify -e client/app.js -o public/bundle.js",
     "lint": "standard"
   },
-  "author": "",
+  "author": "Byron Cueva <byron7cueva@gmail.com>",
   "license": "MIT",
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "@babel/preset-env"
+          ]
+        }
+      ]
+    ]
+  },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babelify": "^10.0.0",
+    "browserify": "^16.5.0",
     "nodemon": "^2.0.2",
-    "standard": "^14.3.1"
+    "standard": "^14.3.1",
+    "vueify": "^9.4.1"
   },
   "dependencies": {
     "chalk": "^3.0.0",
+    "chart.js": "^2.9.3",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-asyncify": "^1.0.0",
     "platziverse-agent": "file:../platziverse-agent",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.8",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "vue": "^2.6.11",
+    "vue-chartjs": "^3.5.0"
   }
 }
