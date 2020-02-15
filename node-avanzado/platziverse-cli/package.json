@@ -16,6 +16,7 @@
     "args": "^5.0.1",
     "blessed": "^0.1.81",
     "blessed-contrib": "^4.8.18",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "platziverse-agent": "file:../platziverse-agent"
   }
 }
