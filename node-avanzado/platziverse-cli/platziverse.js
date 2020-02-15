@@ -15,6 +15,9 @@ const screen = blessed.screen()
 const agents = new Map()
 const agentMetrics = new Map()
 
+// Se va almacenar los ids de los componentes que extendemos
+let extended = []
+
 // Creando un grid
 const grid = new contrib.grid({
   rows: 1,
@@ -44,6 +47,8 @@ function renderData () {
     treeData[title] = {
       uuid,
       agent: true,
+      // De esa manera quedara extendido
+      extended: extended.includes(uuid),
       children: {}
     }
 
@@ -124,6 +129,15 @@ agent.on('agent/message', payload => {
   })
 
   renderData()
+})
+
+// Cuando seleccione un elemento
+tree.on('select', node => {
+  const { uuid } = node
+
+  if (node.agent) {
+    node.extended? extended.push(uuid) : extended = extended.filter(a => e !== uuid)
+  }
 })
 
 // Capturar las teclas
