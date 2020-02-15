@@ -6,6 +6,7 @@
 
 const blessed = require('blessed')
 const contrib = require('blessed-contrib')
+const moment = require('moment')
 const PlaziverseAgent = require('platziverse-agent')
 
 // Obteniendo la instancia de screen de blessed
@@ -45,6 +46,20 @@ function renderData () {
       agent: true,
       children: {}
     }
+
+    // Obteniendo las metrcias del agente
+    const metrics = agentMetrics.get(uuid)
+    Object.keys(metrics).forEach(type => {
+      const metric = {
+        uuid,
+        type,
+        metric: true
+      }
+
+      const metricName = `${type}`
+      // Agregando un hijo del agente
+      treeData[title].children[metricName] = metric
+    })
   }
 
   // Asignando los datos al componente
@@ -68,11 +83,47 @@ agent.on('agent/connected', payload => {
 })
 
 agent.on('agent/disconnected', payload => {
+  const { uuid } = payload.agent
 
+  // Si el agente esta en el mapa se borra ya que se desconecto
+  if(agents.has(uuid)) {
+    agents.delete(uuid)
+    agentMetrics.delete(uuid)
+  }
+
+  renderData()
 })
 
 agent.on('agent/message', payload => {
+  const { uuid } = payload.agent
+  const { timestamp } = payload
 
+  // Si no existe ese agente en el mapa
+  if (!agents.has(uuid)) {
+    agents.set(uuid, payload.agent)
+    agentMetrics.set(uuid, {})
+  }
+
+  const metrics = agentMetrics.get(uuid)
+
+  payload.metrics.forEach(m => {
+    const { type, value } = m
+    if (!Array.isArray(metrics[type])) {
+      metrics[type] = []
+    }
+
+    const length = metrics[type].length
+    if (length >= 20) {
+      metrics[type].shift()
+    }
+
+    metrics[type].push({
+      value,
+      timestamp: moment(timestamp).format('HH:mm:ss')
+    })
+  })
+
+  renderData()
 })
 
 // Capturar las teclas
@@ -81,4 +132,7 @@ screen.key(['escape', 'q', 'C-c'], (ch, key) => {
 })
 
 agent.connect()
+
+// Para iteractuar con el teclado
+tree.focus()
 screen.render()
