@@ -18,6 +18,12 @@ const agentMetrics = new Map()
 // Se va almacenar los ids de los componentes que extendemos
 let extended = []
 
+// Para definir que nodo fue seleccionado
+let selected = {
+  uuid: null,
+  type: null
+}
+
 // Creando un grid
 const grid = new contrib.grid({
   rows: 1,
@@ -41,6 +47,7 @@ const line = grid.set(0, 1, 1, 3, contrib.line, {
 
 function renderData () {
   const treeData = {}
+  let idx = 0
 
   for (let [ uuid, val ] of agents) {
     const title = `${val.name} - (${val.pid})`
@@ -61,7 +68,7 @@ function renderData () {
         metric: true
       }
 
-      const metricName = `${type}`
+      const metricName = `${type} ${" ".repeat(10)} ${idx++}`
       // Agregando un hijo del agente
       treeData[title].children[metricName] = metric
     })
@@ -74,6 +81,29 @@ function renderData () {
   })
 
   // Se necesita renderizar nuevamente la pantalla
+  renderMetric()
+}
+
+function renderMetric() {
+  let series = [{x: [], y:[], title: ''}];
+  if (!selected.uuid && !selected.type) {
+    line.setData(series)
+    screen.render()
+    return
+  }
+
+  const metrics = agentMetrics.get(selected.uuid)
+  if (metrics) {
+    const values = metrics[selected.type]
+    series = [{
+      title: selected.type,
+      // Solo obteniendo los valores timestamp los 10 ultimos
+      x: values.map(v => v.timestamp).slice(-10),
+      // Solo obteniendo los valores value los 10 ultimos
+      y: values.map(v => v.value).slice(-10)
+    }]
+  }
+  line.setData(series)
   screen.render()
 }
 
@@ -133,11 +163,18 @@ agent.on('agent/message', payload => {
 
 // Cuando seleccione un elemento
 tree.on('select', node => {
-  const { uuid } = node
+  const { uuid, type } = node
 
   if (node.agent) {
     node.extended? extended.push(uuid) : extended = extended.filter(a => e !== uuid)
+    selected.uuid = null
+    selected.type = null
+    return
   }
+
+  // Si se selecciona la metrica
+  selected.uuid = uuid
+  selected.type = type
 })
 
 // Capturar las teclas
