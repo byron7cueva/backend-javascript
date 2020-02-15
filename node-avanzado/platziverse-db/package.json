@@ -8,7 +8,7 @@
     "setup": "DEBUG=platziverse:* node setup.js",
     "lint": "standard"
   },
-  "author": "MIT",
+  "author": "Byron Cueva <byron7cueva@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "ava": "^3.3.0",

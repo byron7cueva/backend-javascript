@@ -7,10 +7,10 @@
   "scripts": {
     "test": "DEBUG=platziverse:* nyc --reporter=lcov ava tests/*-tests.js --verbose",
     "start": "NODE_ENV=production node server.js",
-    "start:dev": "DEBUG=platziverse:* nodemon server.js",
+    "start-dev": "DEBUG=platziverse:* nodemon server.js",
     "lint": "standard"
   },
-  "author": "",
+  "author": "Byron Cueva <byron7cueva@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "ava": "^3.3.0",
