@@ -12,12 +12,13 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "^3.3.0",
+    "longjohn": "^0.2.12",
     "nyc": "^15.0.0",
+    "platziverse-test-util": "file:../platziverse-test-util",
     "proxyquire": "^2.1.3",
     "sinon": "^8.1.1",
     "sqlite3": "^4.1.1",
-    "standard": "^14.3.1",
-    "platziverse-test-util": "file:../platziverse-test-util"
+    "standard": "^14.3.1"
   },
   "dependencies": {
     "chalk": "^3.0.0",
