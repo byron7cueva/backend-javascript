@@ -1,32 +1,19 @@
 'use strict'
 
-const { graphql, buildSchema } = require('graphql')
+require('dotenv').config() // Esto carga el archivo .env y va caragarlo como variables de entorno
+const { makeExecutableSchema } = require('graphql-tools')
 const express = require('express')
 const gqlMiddleware = require('express-graphql')
+const { readFileSync } = require('fs')
+const { join } = require('path')
+const resolvers = require('./lib/resolvers')
 
 const app = express()
 const port = process.env.PORT || 3000
 
-
 // Definiendo el esquema
-const schema = buildSchema(`
-  type Query {
-    "Retorna un saludo al mundo"
-    hello: String,
-    "Retorna un saludo a todos"
-    saludo: String
-  }
-`)
-
-// Configurando los resolvers
-const resolvers = {
-  hello: () => {
-    return 'Hola mundo'
-  },
-  saludo: () => {
-    return 'Hola a todos'
-  }
-}
+const typeDefs = readFileSync(join(__dirname, 'lib', 'schema.graphql'), { encoding: 'utf8'})
+const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 app.use('/api', gqlMiddleware({
   schema,
@@ -34,6 +21,6 @@ app.use('/api', gqlMiddleware({
   graphiql: true
 }))
 
-app.listen(port , () => {
+app.listen(port, () => {
   console.log(`Server is listen at http://localhost:${port}`)
 })
