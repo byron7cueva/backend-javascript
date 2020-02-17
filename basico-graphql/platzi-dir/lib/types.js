@@ -23,11 +23,28 @@ module.exports = {
     }
   },
   Person: {
+    /**
+     * Para resolver el tipo de la interface Person
+     */
     __resolveType: (person, context, info) => {
+      // Si la persona tiene datos de telefono es un Monitor
       if (person.phone) {
         return 'Monitor'
       }
-      
+      // Si no se asume que es un estudiante
+      return 'Student'
+    }
+  },
+  /**
+   * Para resolver el tipo de la union GlobalSerach
+   */
+  GlobalSearch: {
+    __resolveType: (item, context, info) => {
+      // Si el item tiene el campo title es un curso
+      if (item.title) return 'Course'
+      // Si el item tiene el campo telefono es un monitor
+      if (item.phone) return 'Monitor'
+      // Si no se asume es un estudiante
       return 'Student'
     }
   }
