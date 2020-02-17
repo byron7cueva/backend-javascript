@@ -1,14 +1,22 @@
 # Variables
 
 ```graphql
-mutation AddPersonToCourse2($course: ID!, $person: ID!){
-  addPeople(courseId: $course, personId: $person) {
+mutation CreateNewCourse($createInput: CourseInput!) {
+  createCourse(input: $createInput){
     _id
     title
   }
 }
 
-{"course": "5e4ac3fc52aedef5cbae4e79", "person": "5e4b0ed0e47dbabf7c7d98f5"}
+{
+  "createInput": {
+    "title": "Mi titulo 7",
+    "teacher": "Profesor 7",
+    "description": "Decricion 7",
+    "topic": "programacion",
+    "level": "principiante"
+  }
+}
 
 query GetCourse2($course: ID!) {
   getCourse(id: $course){
