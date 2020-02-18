@@ -1,0 +1,19 @@
+{
+  "name": "graphql-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "browserify -g uglifyify js/main.js > js/bundle.js"
+  },
+  "author": "byron7cueva",
+  "license": "MIT",
+  "dependencies": {
+    "graphql-request": "^1.8.2",
+    "handlebars": "^4.1.1"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "uglifyify": "^5.0.1"
+  }
+}
