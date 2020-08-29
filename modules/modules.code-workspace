@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "module-nodejs"
+		},
+		{
+			"path": "module-nodejs-use"
+		},
+		{
+			"path": "docs"
+		}
+	],
+	"settings": {}
+}

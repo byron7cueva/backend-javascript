@@ -1,0 +1,11 @@
+{
+  "name": "module-nodejs",
+  "type": "module",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "exports": {
+    "./model": "./model/index.js",
+    "./dao": "./dao/index.js"
+  }
+}
