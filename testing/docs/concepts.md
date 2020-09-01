@@ -51,3 +51,13 @@ npx jest
 ```bash
 npx jest nombre.test.js
 ```
+
+## Snapshot
+
+* Cuanto queremos probar un api y tenemos un valor que van ha cambiar muy rara vez, para eso se debe crear un snapshot
+para comprobar los valores entre los que tenemos y estamos recibiendo.
+* La primera vez que se corra la prueba vamos a tener un resultado positivo.
+* Y hasta que tengamos una diferencia entre la data y la snapshot es cuando va fallar.
+* Se crea una carpeta __snapshot__ donde se crean los snapshot.
+* Se los puede crear manualmente pero se debe seguir el formato que nos propone.
+* Actualizar el snapshot: ```npx jest -u nombre.test.js```

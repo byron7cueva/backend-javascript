@@ -6,11 +6,17 @@
   "license": "MIT",
   "author": "byron7cueva",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "babel-jest": "^26.3.0",
     "jest": "^26.4.2"
+  },
+  "dependencies": {
+    "axios": "^0.20.0"
   }
 }
