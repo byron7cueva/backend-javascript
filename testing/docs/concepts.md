@@ -61,3 +61,9 @@ para comprobar los valores entre los que tenemos y estamos recibiendo.
 * Se crea una carpeta __snapshot__ donde se crean los snapshot.
 * Se los puede crear manualmente pero se debe seguir el formato que nos propone.
 * Actualizar el snapshot: ```npx jest -u nombre.test.js```
+
+## 
+
+* Para montar los componentes y hacerle pruebas de una manera mas facil.
+* Nos va facilitar poder montar el componente independientemente sin necesidad de que este enbebido dentro en una app
+o en el nivel que se encuentre dentro de la aplicación.
