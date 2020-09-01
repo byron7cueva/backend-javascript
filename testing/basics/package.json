@@ -1,0 +1,16 @@
+{
+  "name": "basics",
+  "version": "0.1.0",
+  "main": "index.js",
+  "description": "Basics testing with Jest",
+  "license": "MIT",
+  "author": "byron7cueva",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.11.5",
+    "babel-jest": "^26.3.0",
+    "jest": "^26.4.2"
+  }
+}

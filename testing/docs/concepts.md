@@ -4,6 +4,7 @@
 
 * Toma bloques de codigo y las divide en pequeñas partes, permitindonos probar.
 * Las pruebas unitarias pruebas las cosas que preevemos que van a pasar, no son perfectas prueban suposiciones explicitas.
+* Es poner en juego lo que va pasar
 
 ### Características
 
@@ -38,3 +39,15 @@
 * Una potente libreria para manejar moking.
 * Funciona con TypsScript
 * Un Coverage.
+
+### Correr
+
+Correr todas las pruebas
+
+```bash
+npx jest
+```
+
+```bash
+npx jest nombre.test.js
+```
