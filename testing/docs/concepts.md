@@ -27,6 +27,14 @@
 
 * Es que nosotros mismos probamos.
 
+### Beneficios
+
+* Proporciona un trabajo mas agil.
+* La calidad del código mejora bastante.
+* Detectar errores es mas fácil.
+* Proporciona información.
+* Reduce el costo de un proyecto.
+
 ## Jest
 
 * Es unna compleja herramienta para hacer pruebas unitarias.
