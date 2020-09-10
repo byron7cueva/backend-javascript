@@ -56,3 +56,13 @@ node --inspect archivo.js
 * Routing: Wide cards en las rutas, esto permite manejar expresiones regulares y asi capturar parametros.
 * Middlewares: Interceptan el request y response y llamar por el middeware que sigue.
 * Plugins (como middlewares): Vienen como middlewares.
+
+### Formateo automático
+
+Agregando un hook para que el codigo se haga formato automático cada vez que se hace commit y se sube al repositorio:
+
+```bash
+npx mrm lint-staged
+```
+
+Esto modifica el package.json y le indica que cada vez que se realice un commit va cojer todo el codigo y lo va formatear deacuerdo a la configuración de prettier y va subir el código.

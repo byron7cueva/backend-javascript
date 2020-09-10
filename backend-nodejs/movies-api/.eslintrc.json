@@ -1,0 +1,16 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "extends": ["eslint:recommended", "prettier"],
+  // Variables de entorno, globales
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    // Al utilizar console va ser un warning
+    "no-console": "warn"
+  }
+}
