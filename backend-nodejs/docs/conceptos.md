@@ -76,4 +76,13 @@ Esto modifica el package.json y le indica que cada vez que se realice un commit 
 
 ![image-20200910162051130](./assets/api_rest.png)
 
-![image-20200910170617423](/run/media/byron/Projects/node/backend-javascript/backend-nodejs/docs/assets/api_rest_routes.png)
+![image-20200910170617423](./assets/api_rest_routes.png)
+
+## Capa de Servicios
+
+Vesion simplificada de Clean Architecture.
+
+![image-20200910175529494](./assets/capa_servicios.png)
+
+* Un controlador no puede llamar a otro controlador.
+* Un servicio si puede llamar a otro servicio.
