@@ -66,3 +66,14 @@ npx mrm lint-staged
 ```
 
 Esto modifica el package.json y le indica que cada vez que se realice un commit va cojer todo el codigo y lo va formatear deacuerdo a la configuración de prettier y va subir el código.
+
+## API Restful
+
+* Representation and estate transfer.
+* Es un estilo de arquitectura para construir servicios web no es un estandar pero hay uan especificación creada por Roy Fielding (Apache Software Foundation).
+
+#### Verbos HTTP
+
+![image-20200910162051130](./assets/api_rest.png)
+
+![image-20200910170617423](/run/media/byron/Projects/node/backend-javascript/backend-nodejs/docs/assets/api_rest_routes.png)
