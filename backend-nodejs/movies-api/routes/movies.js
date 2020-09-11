@@ -1,6 +1,13 @@
 const { Router } = require('express');
 const MoviesServices = require('../services/movies');
 
+const {
+  movieIdSchema,
+  createMovieSchema,
+  updateMovieSchema
+} = require('../utils/schemas/movies');
+const validationHandler = require('../utils/middleware/validationHandle');
+
 // Esta funcion recibe el app
 // Esto permite ser dinamicos y poder decidir que aplicacion consume nuestra ruta
 function movieApi(app) {
@@ -24,7 +31,7 @@ function movieApi(app) {
     }
   });
 
-  router.get('/:movieId', async function(req, res, next) {
+  router.get('/:movieId', validationHandler(movieIdSchema, 'params'), async function(req, res, next) {
     const { movieId } = req.params;
 
     try {
@@ -39,7 +46,7 @@ function movieApi(app) {
     }
   });
 
-  router.post('/', async function(req, res, next) {
+  router.post('/', validationHandler(createMovieSchema), async function(req, res, next) {
     const { body: movie } = req;
 
     try {
@@ -54,7 +61,7 @@ function movieApi(app) {
     }
   });
 
-  router.put('/:movieId', async function(req, res, next) {
+  router.put('/:movieId', validationHandler({ movieId: movieIdSchema}, 'params'), validationHandler(updateMovieSchema), async function(req, res, next) {
     const { body: movie } = req;
     const { movieId } = req.params;
 
@@ -70,7 +77,7 @@ function movieApi(app) {
     }
   });
 
-  router.delete('/:movieId', async function(req, res, next) {
+  router.delete('/:movieId', validationHandler({ movieId: movieIdSchema}, 'params'), async function(req, res, next) {
     const { movieId } = req.params;
 
     try {

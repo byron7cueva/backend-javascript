@@ -86,3 +86,18 @@ Vesion simplificada de Clean Architecture.
 
 * Un controlador no puede llamar a otro controlador.
 * Un servicio si puede llamar a otro servicio.
+
+## Middleware
+
+* Es una pieza de software que esta en medio de otras 2, se lo suede describir como pegamento de software.
+* Ayuda conectar otras piesas de software.
+* Los middlewares tienen tres parametros (request, response, next)
+* Un middleware de error es especial porque este recibe 4 parámetrtos (error, request, response, next).
+
+## Validación de datos
+
+### Joi y Boom
+
+* Son tecnologías de Happi.js.
+* Joi (Object Schema Validation): Nos ayuda a validar los esquemas.
+* Boom (HTTP-friendly error objects): Es un manejador de errores de una forma más comprensiva.
