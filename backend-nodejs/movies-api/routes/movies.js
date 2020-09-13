@@ -7,6 +7,11 @@ const {
   updateMovieSchema
 } = require('../utils/schemas/movies');
 const validationHandler = require('../utils/middleware/validationHandle');
+const cacheResponse = require('../utils/cacheResponse');
+const {
+  FIVE_MINUTES_IN_SECONDS,
+  SIXTY_MINUTES_IN_SECONDS
+} = require('../utils/time');
 
 // Esta funcion recibe el app
 // Esto permite ser dinamicos y poder decidir que aplicacion consume nuestra ruta
@@ -18,6 +23,7 @@ function movieApi(app) {
 
   router.get('/', async function(req, res, next) {
     const { tags } = req.query;
+    cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
 
     try {
       const movies = await movieService.getMovies({ tags });
@@ -33,6 +39,7 @@ function movieApi(app) {
 
   router.get('/:movieId', validationHandler(movieIdSchema, 'params'), async function(req, res, next) {
     const { movieId } = req.params;
+    cacheResponse(res, SIXTY_MINUTES_IN_SECONDS);
 
     try {
       const movies = await movieService.getMovie({ movieId });
