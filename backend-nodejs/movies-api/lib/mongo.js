@@ -1,3 +1,4 @@
+const debug = require('debug')('app:db');
 const { MongoClient, ObjectId } = require('mongodb');
 const { config } = require('../config');
 
@@ -6,7 +7,7 @@ const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
 const DB_NAME = config.dbName;
 
-//mongodb+srv://<username>:<password>@cluster0.d4z3s.mongodb.net/<dbname>?retryWrites=true&w=majority
+//mongodb+srv://<username>:<password>@<host>/<dbname>?retryWrites=true&w=majority
 // `mongodb+srv://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${DB_NAME}?retryWrites=true&w=mayority`;
 const MONGO_URI = `mongodb+srv://${USER}:${PASSWORD}@${config.dbHost}/${DB_NAME}?retryWrites=true&w=majority`;
 
@@ -25,7 +26,7 @@ class MongoLib {
             reject(error);
           }
 
-          console.log('Connect succesfully to mongo');
+          debug('Connect succesfully to mongo');
           resolve(this.cilent.db(this.dbName));
         })
       })

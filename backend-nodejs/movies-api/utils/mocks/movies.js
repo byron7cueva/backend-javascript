@@ -85,7 +85,7 @@ const moviesMock = [
   },
   {
     id: "63d718f2-4e37-4090-ad57-dd2cf22393e6",
-    title: "Big Girls Don"t Cry... They Get Even (Stepkids)",
+    title: "Big Girls Don't Cry... They Get Even (Stepkids)",
     year: 2018,
     cover: "http://dummyimage.com/800x600.png/ff4444/ffffff",
     description:
@@ -153,6 +153,22 @@ const moviesMock = [
   }
 ];
 
+function filteredMoviesMock(tag) {
+  return moviesMock.filter(movie => movie.tags.includes(tag));
+}
+
+class MoviesServiceMock {
+  async getMovies() {
+    return Promise.resolve(moviesMock);
+  }
+
+  async createMovie() {
+    return Promise.resolve(moviesMock[0]);
+  }
+}
+
 module.exports = {
-  moviesMock
+  moviesMock,
+  filteredMoviesMock,
+  MoviesServiceMock
 }

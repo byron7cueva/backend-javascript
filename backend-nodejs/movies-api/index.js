@@ -1,3 +1,4 @@
+const debug = require('debug')('app:server');
 const express = require('express');
 
 const { config } = require('./config/index');
@@ -27,5 +28,5 @@ app.use(wrapErrors);
 app.use(errorHandle);
 
 app.listen(config.port, function() {
-  console.log(`Listen http://localhost:${config.port}`);
+  debug(`Listen http://localhost:${config.port}`);
 })

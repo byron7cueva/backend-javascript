@@ -101,3 +101,30 @@ Vesion simplificada de Clean Architecture.
 * Son tecnologías de Happi.js.
 * Joi (Object Schema Validation): Nos ayuda a validar los esquemas.
 * Boom (HTTP-friendly error objects): Es un manejador de errores de una forma más comprensiva.
+
+## Test
+
+* endpoints: Aqui lo que se debe probar si llegan y devuelven los datos correspondientes.
+* Herramientas:
+  * mocha: Permite correr los test.
+  * supertest: Es una utilidad que nos permite levantar un servidor temporal.
+  * sinon: Nos permite hacer mocks para test.
+  * proxyquire: Nos permite injectar los mocks para los paquetes.
+* servicios: Lo servicios deben ser testeados en lo que van a devolver y no en las librerias que llama.
+* TDD
+  * Trata de crear primero los test y luego la funcionalidad.
+  * Es util cuando se tiene clara la lógica de negocio, facilmente se pruede escribir primero los test y solucionarlos con la funcionalidad. Si no es claro TDD no  va funcionar.
+  * Cuando se tiene un bug. Se escribe un test que va fallar porque existe el bug, corriges el bug luego el test va pasar.
+* Coverage: Debemos asegurarnos que estamos probando todos los caminos de una funcionalidad a la hora de hacer test. Coverage es un comando que nos permite identificar donde estamos fallando y como los podemos correguir. nyc Hace parte de una herramienta llaamada instanbull, nos permie generar diferentes reportes, sea para integración continua o para nosotros. Lo recomendado es cumplir con el 60% al 80%.
+
+### Producción
+
+#### Buenas prácticas
+
+* Remover contraseñas quemadas.
+* Encapsular código spaghetti. Es muy dificil de leer o crecen mucho, lo que se debe es separarlo en varias funciones y removerlo en archivos que tengan un mejor significado.
+* Revisar la estructura del proyecto.
+* Configurar los scripts de build. Comando de construcción optimo para producción.
+* Agregar soporte de caché.
+* Añadir HTTPS (Encriptadas y seguras) y CORS (No todos los clientes se conecten a nuestro backend).
+* Revisar otras prácticas de seguridad. Librerías como Helmet o revisar OWAS (Open Web Application Security Project)
