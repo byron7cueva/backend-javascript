@@ -128,3 +128,41 @@ Vesion simplificada de Clean Architecture.
 * Agregar soporte de caché.
 * Añadir HTTPS (Encriptadas y seguras) y CORS (No todos los clientes se conecten a nuestro backend).
 * Revisar otras prácticas de seguridad. Librerías como Helmet o revisar OWAS (Open Web Application Security Project)
+
+## NOW
+
+* Es un servicio serveless, no tenemo que preocuparnos en infraestructura, si la aplicación requiere de mas recursos el servicio lo gestiona.
+
+* Variables de entorno:
+
+  * Las gestiona a traves de secrects, guarda la variable de entorno y nunca mas  nos deja acceder a ese resultado.
+
+    ```shell
+    now secret add nombre valor
+    ```
+
+  * Listar las secrets guardadas
+
+    ```shell
+    now secrets ls
+    ```
+
+  * Verificar si esta bien configurado el archivo now.json para el despliegue en now. El siguiente comando corre un despliegue serveless de forma local:
+
+    ```bash
+    now dev
+    ```
+
+  * Desplegar
+
+    ```
+    now
+    ```
+
+  * Cambiar url
+
+    ```shell
+    now alias url_original.now.sh url_alias.now.sh 
+    ```
+
+    
