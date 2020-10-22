@@ -20,3 +20,7 @@
 
 ### Function Scope
 
+### Block Scope
+
+* Es parte de un código que se implementa entre llaves, como por ejemplo un if.
+
