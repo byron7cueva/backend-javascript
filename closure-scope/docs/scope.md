@@ -14,3 +14,7 @@
 
 * Nos permite acceder a una variable en un bloque de código o una función.
 
+## Ambito Léxico
+
+* La funcion tiene acceso al valor de una variable dentro del bloque de código donde fue construida.
+
