@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "graphql-request": "^1.8.2",
-    "handlebars": "^4.1.1"
+    "handlebars": "^4.7.7"
   },
   "devDependencies": {
     "browserify": "^16.2.3",
