@@ -17,7 +17,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
-    "nanoid": "^2.1.11",
+    "nanoid": "^3.1.31",
     "redis": "^3.0.2",
     "request": "^2.88.0",
     "swagger-ui-express": "^4.1.3"
